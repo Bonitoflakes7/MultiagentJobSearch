@@ -34,6 +34,10 @@ class DashboardJobCard:
     why: tuple[str, ...]
     concerns: tuple[str, ...]
     skill_gaps: tuple[str, ...]
+    ai_recommendation: str = ""
+    human_decision: str = "not_recorded"
+    external_action: str = "not_requested"
+    outcome: str = "unknown"
 
 
 @dataclass(frozen=True)
@@ -224,6 +228,7 @@ def build_dashboard(
             why=decision.rationale,
             concerns=decision.concerns,
             skill_gaps=match.missing_skills,
+            ai_recommendation=decision.action,
         ))
 
     verified = sum(1 for item in verifications if item.status == "verified")

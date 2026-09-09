@@ -103,3 +103,7 @@ Route manual pasted descriptions, saved URLs, explicitly allowlisted company car
 ## Phase 18 — matching and recommendation response (implemented)
 
 Generate a structured recommendation for each ranked job containing verification, fit score, confidence, tier, action, strengths, gaps, resume-safe recommendations, blocked claims, and ranking reasons. Render it to Markdown/dashboard views without allowing an LLM to invent facts.
+
+## Phase 19 — human-in-the-loop dashboard (implemented: interaction foundation)
+
+Expose opportunities, daily actions, job evidence, score breakdowns, resume changes, and clear controls for human decisions. Persist decisions separately from AI recommendations, require approval before preparing an external action, and record later application/interview/rejection/offer outcomes.

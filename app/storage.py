@@ -98,6 +98,15 @@ CREATE TABLE IF NOT EXISTS application_outcomes (
     payload_json TEXT NOT NULL,
     created_at TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS human_decisions (
+    decision_id TEXT PRIMARY KEY,
+    record_id TEXT NOT NULL,
+    decision TEXT NOT NULL,
+    actor TEXT NOT NULL,
+    note TEXT,
+    created_at TEXT NOT NULL
+);
 """
 
 
@@ -211,11 +220,19 @@ class SQLiteStore:
         )
         self.connection.commit()
 
+    def save_human_decision(self, decision: Any) -> None:
+        self.connection.execute(
+            "INSERT OR IGNORE INTO human_decisions(decision_id,record_id,decision,actor,note,created_at) VALUES(?,?,?,?,?,?)",
+            (decision.decision_id, decision.record_id, decision.decision, decision.actor, decision.note, decision.created_at),
+        )
+        self.connection.commit()
+
     def count(self, table: str) -> int:
         allowed = {
             "workflow_runs", "candidate_profiles", "jobs", "verification_results",
             "match_analyses", "resume_analyses", "ranking_decisions", "agent_evaluations",
             "memory_events", "approval_requests", "application_outcomes",
+            "human_decisions",
         }
         if table not in allowed:
             raise ValueError("unsupported table")
