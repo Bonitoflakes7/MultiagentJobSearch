@@ -73,3 +73,7 @@ Acceptance: failures are recoverable, side effects are authorized, secrets are p
 Build a historical benchmark and compare policy versions using ranking quality, calibration, user approval, duplicate rate, and application/interview conversion.
 
 Acceptance: improvements are supported by measured results rather than claims from the evaluator alone. Versioned benchmark cases, validation, ranking metrics, calibration metrics, safety indicators, and policy deltas are implemented in `src/job_search_ai/domain/research_eval.py`.
+
+## Phase 12 — application foundation (implemented)
+
+Create the real application package, runtime entry point, dependency configuration, and CrewAI Flow boundary while keeping the validated domain pipeline as the source of truth.
