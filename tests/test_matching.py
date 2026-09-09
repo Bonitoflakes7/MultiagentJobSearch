@@ -20,7 +20,7 @@ GOOD_JOB = """Title: Python Backend Developer Intern
 Company: Example AI Labs
 Location: Bangalore, Karnataka
 Experience: 0-1 years
-Posted: 2026-09-01
+Posted: 2026-09-05
 Responsibilities:
 - Build REST APIs with Python and FastAPI
 - Work with PostgreSQL and Docker

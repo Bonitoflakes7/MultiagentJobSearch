@@ -13,7 +13,7 @@ The verifier checks normalized records before matching or ranking. Each check re
 
 - URL shape: HTTP(S) URL validation; no network request yet.
 - Completeness: title, company, location, and description.
-- Freshness: posting date against a configurable age window.
+- Freshness: posting date against a configurable age window, defaulting to 7 days for this job search.
 - Location: Bangalore, Kerala, and Pune by default.
 - Experience: fresher/0-1 year compatibility and seniority signals.
 - Role relevance: target-role term detection.
@@ -24,6 +24,8 @@ The verifier checks normalized records before matching or ranking. Each check re
 
 This phase does not claim that a company is legitimate, that a URL is reachable, or that a posting is still accepting applications. Those require permitted source access and evidence. Until then, such facts remain uncertain rather than being invented.
 
+The default freshness policy rejects postings older than 7 days. Missing, future, or unparseable dates remain uncertain and require review. Relative labels such as `2 days ago`, `yesterday`, and `today` are supported when the verification reference date is known.
+
 ## Phase 3 test result
 
 The automated test suite covers verified, stale, senior, incomplete, injection-containing, and duplicate listings. Run:
@@ -31,4 +33,3 @@ The automated test suite covers verified, stale, senior, incomplete, injection-c
 ```text
 python -m unittest discover -s tests -v
 ```
-

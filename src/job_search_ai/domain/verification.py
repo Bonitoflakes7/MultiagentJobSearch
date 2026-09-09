@@ -49,10 +49,21 @@ _INJECTION_TERMS = re.compile(r"\b(ignore (?:all )?(?:previous|prior) instructio
 _DATE_FORMATS = ("%Y-%m-%d", "%d-%m-%Y", "%d/%m/%Y", "%B %d, %Y", "%b %d, %Y")
 
 
-def _parse_date(value: str | None) -> date | None:
+def _parse_date(value: str | None, reference: date | None = None) -> date | None:
     if not value:
         return None
     cleaned = value.strip()
+    reference = reference or datetime.now(timezone.utc).date()
+    relative = re.fullmatch(r"(?:(\d+)\s+days?\s+ago|yesterday|today|just\s+posted)", cleaned, re.I)
+    if relative:
+        if relative.group(1):
+            return reference - timedelta(days=int(relative.group(1)))
+        if cleaned.casefold() == "yesterday":
+            return reference - timedelta(days=1)
+        return reference
+    weeks = re.fullmatch(r"(\d+)\s+weeks?\s+ago", cleaned, re.I)
+    if weeks:
+        return reference - timedelta(weeks=int(weeks.group(1)))
     for fmt in _DATE_FORMATS:
         try:
             return datetime.strptime(cleaned, fmt).date()
@@ -84,7 +95,7 @@ def _check_completeness(record: JobRecord) -> VerificationCheck:
 def _check_freshness(record: JobRecord, as_of: date, max_age_days: int) -> VerificationCheck:
     if not record.posting_date:
         return VerificationCheck("freshness", "uncertain", "Posting date is not supplied.")
-    posted = _parse_date(record.posting_date)
+    posted = _parse_date(record.posting_date, as_of)
     if not posted:
         return VerificationCheck("freshness", "uncertain", "Posting date could not be parsed.", (record.posting_date,))
     if posted > as_of:
@@ -139,7 +150,7 @@ def verify_job(
     max_candidate_years: float = 1.0,
     target_role_terms: tuple[str, ...] = DEFAULT_TARGET_ROLE_TERMS,
     as_of: date | None = None,
-    max_age_days: int = 60,
+    max_age_days: int = 7,
 ) -> VerificationResult:
     """Run offline checks; network-dependent checks remain explicitly unverified."""
 
@@ -181,4 +192,3 @@ def find_duplicate_groups(records: tuple[JobRecord, ...]) -> tuple[tuple[str, ..
     for record in records:
         groups.setdefault(record.fingerprint, []).append(record.record_id)
     return tuple(tuple(ids) for ids in groups.values() if len(ids) > 1)
-

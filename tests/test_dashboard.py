@@ -35,6 +35,7 @@ class DashboardTests(unittest.TestCase):
         self.assertEqual(snapshot.stats["jobs_discovered"], 1)
         self.assertEqual(snapshot.stats["interviews"], 1)
         self.assertEqual(snapshot.top_opportunities[0].title, "Python Backend Developer Intern")
+        self.assertEqual(snapshot.top_opportunities[0].posting_date, "2026-09-08")
 
     def test_markdown_digest_contains_explanation_and_action(self):
         snapshot = build_dashboard((self.job,), (self.verification,), (self.match,), self.decision, self.plan)
@@ -59,4 +60,3 @@ class DashboardTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -26,6 +26,7 @@ class DashboardJobCard:
     title: str
     company: str
     location: str
+    posting_date: str
     score: float
     confidence: float
     action: str
@@ -80,6 +81,7 @@ def build_dashboard(
             title=decision.title or "Untitled role",
             company=decision.company or "Unknown company",
             location=job.location or "Unknown location",
+            posting_date=job.posting_date or "Unknown",
             score=match.overall_score,
             confidence=match.confidence,
             action=decision.action,
@@ -136,6 +138,7 @@ def render_digest_markdown(snapshot: DashboardSnapshot) -> str:
         lines.append(f"Tier {card.tier} · Score {card.score:.1f}/100 · Confidence {card.confidence:.0%} · Action: **{card.action}**")
         if card.location:
             lines.append(f"Location: {card.location}")
+        lines.append(f"Posted: {card.posting_date}")
         if card.why:
             lines.append("Why: " + "; ".join(card.why))
         if card.concerns:
@@ -165,7 +168,7 @@ def render_dashboard_html(snapshot: DashboardSnapshot) -> str:
         concerns = "".join(f"<li>{escape(item)}</li>" for item in card.concerns)
         cards.append(
             f"<article class='job-card'><h2>#{card.rank} {escape(card.title)} — {escape(card.company)}</h2>"
-            f"<p>Tier {escape(card.tier)} · Score {card.score:.1f}/100 · Confidence {card.confidence:.0%} · Action: {escape(card.action)}</p>"
+            f"<p>Tier {escape(card.tier)} · Score {card.score:.1f}/100 · Confidence {card.confidence:.0%} · Action: {escape(card.action)} · Posted: {escape(card.posting_date)}</p>"
             f"<p><strong>Why:</strong> {why}</p>"
             f"<ul>{concerns}</ul></article>"
         )

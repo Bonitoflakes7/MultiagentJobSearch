@@ -53,7 +53,7 @@ class DailyActionPlan:
 
 
 def _freshness_score(job: JobRecord, as_of: date) -> float:
-    posted = _parse_date(job.posting_date)
+    posted = _parse_date(job.posting_date, as_of)
     if not posted:
         return 45.0
     age = (as_of - posted).days
@@ -183,4 +183,3 @@ def build_daily_plan(
         ranked_jobs=decisions,
         omitted_count=max(0, len([item for item in decisions if item.action != "skip"]) - len(actions)),
     )
-
