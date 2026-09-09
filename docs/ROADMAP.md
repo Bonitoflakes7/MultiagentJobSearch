@@ -62,11 +62,11 @@ Add a dashboard, “why?” views, daily/weekly reports, and draft email notific
 
 Acceptance: the user can inspect the evidence behind every recommendation and approve any outbound communication. The read-only dashboard snapshot and Markdown/HTML digest renderers are implemented in `src/job_search_ai/presentation/dashboard.py`; outbound delivery remains Phase 10.
 
-## Phase 10 — integrations and production hardening
+## Phase 10 — integrations and production hardening (baseline implemented)
 
 Add permitted job sources, authentication, retries, idempotency, observability, cost controls, access controls, and deployment documentation.
 
-Acceptance: failures are recoverable, side effects are authorized, secrets are protected, and the system can be demonstrated end to end.
+Acceptance: failures are recoverable, side effects are authorized, secrets are protected, and the system can be demonstrated end to end. The baseline source-adapter, retry, approval, observability, and runtime-configuration boundaries are implemented; durable production deployment remains hardening work.
 
 ## Phase 11 — research-grade evaluation
 
