@@ -68,8 +68,8 @@ Add permitted job sources, authentication, retries, idempotency, observability, 
 
 Acceptance: failures are recoverable, side effects are authorized, secrets are protected, and the system can be demonstrated end to end. The baseline source-adapter, retry, approval, observability, and runtime-configuration boundaries are implemented; durable production deployment remains hardening work.
 
-## Phase 11 — research-grade evaluation
+## Phase 11 — research-grade evaluation (implemented)
 
 Build a historical benchmark and compare policy versions using ranking quality, calibration, user approval, duplicate rate, and application/interview conversion.
 
-Acceptance: improvements are supported by measured results rather than claims from the evaluator alone.
+Acceptance: improvements are supported by measured results rather than claims from the evaluator alone. Versioned benchmark cases, validation, ranking metrics, calibration metrics, safety indicators, and policy deltas are implemented in `src/job_search_ai/domain/research_eval.py`.
