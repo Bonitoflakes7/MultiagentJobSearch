@@ -99,3 +99,7 @@ Expose narrow, permission-checked tools for candidate/profile reads, job persist
 ## Phase 17 — permitted source integrations (implemented: bounded first adapters)
 
 Route manual pasted descriptions, saved URLs, explicitly allowlisted company career pages, and RSS/Atom feeds through source records, then normalization and verification. The first live adapters enforce bounded HTTP access, response limits, retries, attribution, and terms review. API-specific adapters, production rate limits/circuit breakers, and source-by-source legal review remain before enabling additional sources.
+
+## Phase 18 — matching and recommendation response (implemented)
+
+Generate a structured recommendation for each ranked job containing verification, fit score, confidence, tier, action, strengths, gaps, resume-safe recommendations, blocked claims, and ranking reasons. Render it to Markdown/dashboard views without allowing an LLM to invent facts.

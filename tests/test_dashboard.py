@@ -6,7 +6,7 @@ from src.job_search_ai.domain.matching import load_candidate_profile, match_job
 from src.job_search_ai.domain.memory import MemoryLedger
 from src.job_search_ai.domain.ranking import build_daily_plan, rank_jobs
 from src.job_search_ai.domain.verification import verify_job
-from src.job_search_ai.presentation.dashboard import build_dashboard, render_dashboard_html, render_digest_markdown
+from src.job_search_ai.presentation.dashboard import build_dashboard, render_dashboard_html, render_digest_markdown, render_recommendation_markdown
 
 
 PROFILE = load_candidate_profile("data/candidate/profile_v1.json")
@@ -44,6 +44,20 @@ class DashboardTests(unittest.TestCase):
         self.assertIn("Top opportunities", digest)
         self.assertIn("Python Backend Developer Intern", digest)
         self.assertIn("Today's action plan", digest)
+
+    def test_structured_recommendation_contains_score_gaps_resume_guards_and_rank_reason(self):
+        snapshot = build_dashboard(
+            (self.job,), (self.verification,), (self.match,), self.decision, self.plan,
+            resume_analyses=(),
+        )
+        recommendation = snapshot.recommendations[0]
+        rendered = render_recommendation_markdown(recommendation)
+        self.assertIn("Verification: Verified", rendered)
+        self.assertIn("Fit score:", rendered)
+        self.assertIn("Confidence:", rendered)
+        self.assertIn("Tier:", rendered)
+        self.assertIn("Why rank?", rendered)
+        self.assertIn("Resume recommendations", rendered)
 
     def test_html_renderer_escapes_untrusted_job_text(self):
         hostile = normalize_job(JobInput(source_kind="paste", raw_text=TEXT.replace("Example Co", "<script>alert(1)</script>"), source_url="https://jobs.example.com/2"))
