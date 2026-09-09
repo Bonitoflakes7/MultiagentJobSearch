@@ -26,11 +26,11 @@ Check URL accessibility, job freshness, duplicate identity, location, seniority,
 
 Acceptance: the system can explain why a listing is verified, uncertain, rejected, or needs human review. The offline verifier and duplicate-group detector are implemented in `src/job_search_ai/domain/verification.py`; network-dependent checks remain explicitly unverified.
 
-## Phase 4 — matching and explainable scoring
+## Phase 4 — matching and explainable scoring (implemented)
 
 Compare each verified job with the candidate profile. Produce weighted dimensions, evidence, skill gaps, uncertainty, and a recommendation.
 
-Acceptance: scores are reproducible from a stored input snapshot and never depend on hidden conversational history.
+Acceptance: scores are reproducible from a stored input snapshot and never depend on hidden conversational history. The baseline matcher is implemented in `src/job_search_ai/domain/matching.py` with weighted dimensions, evidence, gaps, confidence, and recommendation bands.
 
 ## Phase 5 — ranking and daily action plan
 
