@@ -20,11 +20,11 @@ Accept saved job URLs, pasted descriptions, and permitted source data. Normalize
 
 Acceptance: malformed, incomplete, duplicate, and stale-looking records are identified without silently disappearing. The deterministic first version is implemented in `src/job_search_ai/domain/jobs.py`; website fetching and source adapters remain future work.
 
-## Phase 3 — verification and safety gates
+## Phase 3 — verification and safety gates (implemented)
 
 Check URL accessibility, job freshness, duplicate identity, location, seniority, employment type, and suspicious or ambiguous content.
 
-Acceptance: the system can explain why a listing is verified, uncertain, rejected, or needs human review.
+Acceptance: the system can explain why a listing is verified, uncertain, rejected, or needs human review. The offline verifier and duplicate-group detector are implemented in `src/job_search_ai/domain/verification.py`; network-dependent checks remain explicitly unverified.
 
 ## Phase 4 — matching and explainable scoring
 
