@@ -18,6 +18,12 @@ python -m unittest tests.test_crew_flow -v
 
 CrewAI's local storage is redirected to ignored project paths under `data/crewai/` and `data/crewai-localappdata/` so the application does not depend on unavailable platform user-data directories.
 
+The smoke command can persist its workflow records:
+
+```text
+python -m app.main --smoke --database data/job_search.sqlite3
+```
+
 ## CrewAI boundary
 
 CrewAI is declared in `requirements.txt`. The Flow adapter is import-safe when CrewAI is unavailable and uses an offline fallback with the same public behavior. This preserves deterministic validation and makes CrewAI responsible for orchestration rather than truth or permissions.

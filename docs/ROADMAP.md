@@ -77,3 +77,11 @@ Acceptance: improvements are supported by measured results rather than claims fr
 ## Phase 12 — application foundation (implemented)
 
 Create the real application package, runtime entry point, dependency configuration, and CrewAI Flow boundary while keeping the validated domain pipeline as the source of truth.
+
+## Phase 13 — database and durable state (implemented)
+
+Persist workflow runs, profile versions, jobs, agent results, evaluations, memory events, approvals, and outcomes in SQLite with immutable versioned snapshots and idempotent retries.
+
+## Phase 14 — CrewAI Flow orchestration (implemented)
+
+Use an explicit CrewAI Flow to orchestrate the validated stages from initialization through publication, with optional SQLite persistence and an offline fallback.
