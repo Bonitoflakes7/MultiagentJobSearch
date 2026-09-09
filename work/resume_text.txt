@@ -1,0 +1,57 @@
+                                               Abhishek Dev
+   +91 9741356569 | abhishekdevqwio7@gmail.com| linkedin.com/in/abhishekdev7 | github.com/Bonitoflakes7 |Portfolio
+                    Backend Engineer • API Integrations • Asynchronous Processing • Bangalore, India
+
+TECHNICAL SKILLS
+Languages | Python, Go, SQL, Cypher, JavaScript
+Frameworks & Technologies| FastAPI, Flask, REST APIs, Celery, Redis, LangChain, LangGraph, Supabase
+Databases & Infrastructure| PostgreSQL, Neo4j AuraDB, ChromaDB, Docker
+Developer Tools | Git, GitHub, Postman, AWS, Vercel
+Libraries | TensorFlow, Keras, Pandas, NumPy, Scikit-learn, Matplotlib, Plotly
+
+WORK EXPERIENCE
+Backend Developer Intern                                                                                  Dec 2025 – Present
+ComixCanal | Startup                                                                                                    Remote
+    •    Developed backend services in Go and Python for third-party platform integrations, implementing reliable webhook
+         processing, request validation, and transaction workflow automation.
+    •    Implemented cryptographic HMAC signature verification to authenticate incoming requests and
+         prevent unauthorized access to backend APIs.
+    •    Designed and built secure webhook receivers to process real-time Shopify events with payload
+         validation and reliable event handling.
+    •    Developed an automated email notification system that sends purchase and customer details to
+         content authors upon successful transactions.
+
+PROJECTS
+HCP CRM - AI-First CRM with Agentic Backend| FastAPI · LangGraph · Groq LLM · PostgreSQL · React · Redux
+     •   Built a full-stack CRM with a LangGraph agentic backend (5-tool orchestration loop) and Groq-powered LLM, enabling
+         natural-language business queries over structured PostgreSQL data.
+     •   Designed a production FastAPI backend with JWT auth, SQLAlchemy ORM, and Railway -hosted PostgreSQL; resolved
+         multi-hop LangGraph routing bugs to achieve stable conditional agent execution.
+     •   Delivered a complete React + Redux frontend with real-time AI assistant integration, iterating through 4 debug cycles to
+         ship a stable, fully integrated product end-to-end.
+
+AI Prompt Marketplace – Backend REST API| Python, Flask, PostgreSQL, JWT Authentication, REST APIs
+     •   Built a modular Flask REST API with JWT authentication, role-based access control, and protected CRUD endpoints
+     •   Designed structured database models and scalable API workflows for secure prompt and user management
+     •   Developed and tested backend communication, authentication middleware, and database interaction logic
+
+AutoAgent – Autonomous Research Agent| Python, LangGraph, LangChain, Groq API, Tavily Search API, BeautifulSoup, Streamlit
+     • Built a multi-node LangGraph research agent (Planner → Reader → Synthesizer → Fact-check) that autonomously
+       breaks down queries, retrieves web data, and generates cited, confidence -verified responses.
+    •  Implemented confidence-based retry logic with conditional loops across agent nodes, reducing hallucination risk and
+       ensuring reliable autonomous research execution on long-form queries.
+GraphChat – Natural Language Knowledge Graph Assistant| Python, Neo4j, LangChain, Groq API, Streamlit, Cypher
+     •   Built an AI chatbot that converts natural language into Cypher queries using LangChain and Llama 3.3 70B via Groq
+     •   Designed a Neo4j knowledge graph with multi-hop entity relationships and engineered prompt templates for accurate
+         query generation
+     •   Deployed the application on Streamlit Community Cloud with secure secrets management
+
+EDUCATION
+Master of Computer Application with Artificial Intelligence                                                         2025-2027
+Jain University                                                                                           Bangalore, Karnataka
+SGPA: 9.1
+
+Bachelors of Computer Application with Data Science                                                                 2022-2025
+CMR University                                                                                            Bangalore, Karnataka
+CGPA: 8.45 | 6th Rank Holder
+

@@ -1,0 +1,93 @@
+{
+  "profile_version": "1.0",
+  "source_policy": {
+    "resume_file": "Abhishek_Dev_18_6_2026.pdf",
+    "additional_user_evidence": ["HealthRecord AI - Clinical Document Intelligence Platform"],
+    "contact_data_excluded_from_matching_profile": true
+  },
+  "search_preferences": {
+    "target_roles": [
+      "Python Developer",
+      "Software Developer",
+      "AI Engineer",
+      "Backend Developer",
+      "AI Developer",
+      "Intern - Python/Backend/AI"
+    ],
+    "experience_band": "fresher_0_to_1_year",
+    "locations": ["Bangalore", "Kerala", "Pune"],
+    "salary_constraint": null,
+    "company_types": ["startup", "mnc"],
+    "javascript_framework_preference": "avoid_primary_requirement",
+    "work_arrangement": null
+  },
+  "skills": {
+    "primary": [
+      "Python", "FastAPI", "Flask", "REST APIs", "LangChain", "LangGraph",
+      "PostgreSQL", "SQL", "Docker", "RAG", "Celery", "Redis", "JWT authentication",
+      "webhooks", "API integrations", "agentic workflows"
+    ],
+    "additional": [
+      "MySQL", "MongoDB", "CrewAI", "Go", "Neo4j", "ChromaDB", "AWS",
+      "Tesseract OCR", "Gemini", "Groq", "Tavily", "BeautifulSoup", "Streamlit",
+      "Pandas", "NumPy", "scikit-learn", "TensorFlow", "Keras", "Cypher"
+    ],
+    "secondary_or_contextual": ["JavaScript", "React", "Redux", "Supabase", "Vercel"]
+  },
+  "experience": [
+    {
+      "title": "Backend Developer Intern",
+      "company": "ComixCanal",
+      "company_type": "startup",
+      "start": "2025-12",
+      "end": null,
+      "location": "Remote",
+      "evidence_class": "verified_resume"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Master of Computer Application with Artificial Intelligence",
+      "institution": "Jain University",
+      "location": "Bangalore, Karnataka",
+      "period": "2025-2027",
+      "result": "SGPA 9.1",
+      "evidence_class": "verified_resume"
+    },
+    {
+      "degree": "Bachelor of Computer Application with Data Science",
+      "institution": "CMR University",
+      "location": "Bangalore, Karnataka",
+      "period": "2022-2025",
+      "result": "CGPA 8.45; 6th rank holder",
+      "evidence_class": "verified_resume"
+    }
+  ],
+  "projects": [
+    {
+      "name": "HCP CRM - AI-First CRM with Agentic Backend",
+      "technologies": ["FastAPI", "LangGraph", "Groq LLM", "PostgreSQL", "React", "Redux", "JWT", "SQLAlchemy"],
+      "evidence_class": "verified_resume"
+    },
+    {
+      "name": "AI Prompt Marketplace - Backend REST API",
+      "technologies": ["Python", "Flask", "PostgreSQL", "JWT", "REST APIs", "RBAC"],
+      "evidence_class": "verified_resume"
+    },
+    {
+      "name": "AutoAgent - Autonomous Research Agent",
+      "technologies": ["Python", "LangGraph", "LangChain", "Groq", "Tavily", "BeautifulSoup", "Streamlit"],
+      "evidence_class": "verified_resume"
+    },
+    {
+      "name": "GraphChat - Natural Language Knowledge Graph Assistant",
+      "technologies": ["Python", "Neo4j", "LangChain", "Groq", "Streamlit", "Cypher"],
+      "evidence_class": "verified_resume"
+    },
+    {
+      "name": "HealthRecord AI - Clinical Document Intelligence Platform",
+      "technologies": ["FastAPI", "LangGraph", "Gemini", "Tesseract OCR", "RAG", "JWT"],
+      "evidence_class": "verified_user"
+    }
+  ]
+}
