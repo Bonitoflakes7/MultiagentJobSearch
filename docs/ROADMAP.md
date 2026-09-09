@@ -56,11 +56,11 @@ Store user reactions, accepted/rejected recommendations, application outcomes, i
 
 Acceptance: the system learns preference and calibration signals without treating every rejection as proof that the original prediction was wrong. The append-only memory ledger and replayable learning snapshot are implemented in `src/job_search_ai/domain/memory.py`.
 
-## Phase 9 — dashboard and digest delivery
+## Phase 9 — dashboard and digest delivery (implemented)
 
 Add a dashboard, “why?” views, daily/weekly reports, and draft email notifications.
 
-Acceptance: the user can inspect the evidence behind every recommendation and approve any outbound communication.
+Acceptance: the user can inspect the evidence behind every recommendation and approve any outbound communication. The read-only dashboard snapshot and Markdown/HTML digest renderers are implemented in `src/job_search_ai/presentation/dashboard.py`; outbound delivery remains Phase 10.
 
 ## Phase 10 — integrations and production hardening
 
