@@ -50,11 +50,11 @@ Score agent outputs against rubrics, detect errors, record feedback, and create 
 
 Acceptance: evaluator decisions are auditable and a new policy cannot replace the current policy without passing regression tests. The evaluator and champion/challenger comparison logic are implemented in `src/job_search_ai/domain/governance.py`.
 
-## Phase 8 — memory and learning from feedback
+## Phase 8 — memory and learning from feedback (implemented)
 
 Store user reactions, accepted/rejected recommendations, application outcomes, interview outcomes, and known reasons for failure.
 
-Acceptance: the system learns preference and calibration signals without treating every rejection as proof that the original prediction was wrong.
+Acceptance: the system learns preference and calibration signals without treating every rejection as proof that the original prediction was wrong. The append-only memory ledger and replayable learning snapshot are implemented in `src/job_search_ai/domain/memory.py`.
 
 ## Phase 9 — dashboard and digest delivery
 
