@@ -38,11 +38,11 @@ Rank jobs using fit, personal preference, career value, freshness, effort, and a
 
 Acceptance: ranking explanations identify the factors that changed an item's position and handle ties or conflicts explicitly. The baseline ranker and bounded action-plan builder are implemented in `src/job_search_ai/domain/ranking.py`.
 
-## Phase 6 — resume analysis and controlled tailoring
+## Phase 6 — resume analysis and controlled tailoring (implemented)
 
 Suggest job-specific improvements and generate an optional tailored draft. Enforce a no-fabrication policy and preserve the base resume.
 
-Acceptance: every proposed change is classified as reorder, rewrite, clarify, quantify, or unsupported claim; unsupported claims are blocked.
+Acceptance: every proposed change is classified as reorder, rewrite, clarify, quantify, or unsupported claim; unsupported claims are blocked. The safe baseline analysis is implemented in `src/job_search_ai/domain/resume.py`; automatic resume text generation remains gated behind a confirmed source snapshot and human approval.
 
 ## Phase 7 — evaluator and governance layer
 
