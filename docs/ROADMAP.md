@@ -44,11 +44,11 @@ Suggest job-specific improvements and generate an optional tailored draft. Enfor
 
 Acceptance: every proposed change is classified as reorder, rewrite, clarify, quantify, or unsupported claim; unsupported claims are blocked. The safe baseline analysis is implemented in `src/job_search_ai/domain/resume.py`; automatic resume text generation remains gated behind a confirmed source snapshot and human approval.
 
-## Phase 7 — evaluator and governance layer
+## Phase 7 — evaluator and governance layer (implemented)
 
 Score agent outputs against rubrics, detect errors, record feedback, and create versioned improvement proposals.
 
-Acceptance: evaluator decisions are auditable and a new policy cannot replace the current policy without passing regression tests.
+Acceptance: evaluator decisions are auditable and a new policy cannot replace the current policy without passing regression tests. The evaluator and champion/challenger comparison logic are implemented in `src/job_search_ai/domain/governance.py`.
 
 ## Phase 8 — memory and learning from feedback
 
