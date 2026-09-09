@@ -96,6 +96,6 @@ Acceptance: agent definitions can be constructed without an LLM call; evidence o
 
 Expose narrow, permission-checked tools for candidate/profile reads, job persistence, duplicate detection, source validation, matching, evaluations, feedback, email drafts, and resume drafts. No tool sends email or submits an application.
 
-## Phase 17 — permitted source integrations (implemented: local sources)
+## Phase 17 — permitted source integrations (implemented: bounded first adapters)
 
-Route manual pasted descriptions and saved URLs through the permitted source adapter into source records, then normalization and verification. Live company-page/API/RSS adapters remain the next controlled increment and must add rate limits, timeouts, retries, attribution, duplicate handling, terms review, and failure logging.
+Route manual pasted descriptions, saved URLs, explicitly allowlisted company career pages, and RSS/Atom feeds through source records, then normalization and verification. The first live adapters enforce bounded HTTP access, response limits, retries, attribution, and terms review. API-specific adapters, production rate limits/circuit breakers, and source-by-source legal review remain before enabling additional sources.

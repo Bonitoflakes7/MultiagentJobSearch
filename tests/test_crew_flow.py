@@ -4,6 +4,7 @@ import tempfile
 import unittest
 
 from app.crew.flow import CREWAI_AVAILABLE, build_flow
+from src.job_search_ai.infrastructure.integrations import SourceItem
 from app.storage import SQLiteStore
 from src.job_search_ai.domain.jobs import JobInput
 
@@ -56,6 +57,31 @@ Requirements: Python, FastAPI
                 self.assertEqual(store.count("agent_evaluations"), 2)
             finally:
                 store.close()
+
+    def test_flow_accepts_permitted_source_adapter_before_verification(self):
+        class FixtureAdapter:
+            def fetch(self):
+                return (SourceItem(
+                    "fixture-1",
+                    "fixture_source",
+                    JobInput(
+                        source_kind="url",
+                        source_url="https://fixture.example/jobs/1",
+                        raw_text="""Title: AI Engineer Intern
+Company: Fixture Labs
+Location: Bangalore
+Experience: 0-1 years
+Posted: 2026-09-08
+Requirements: Python, FastAPI
+""",
+                    ),
+                ),)
+
+        flow = build_flow((), as_of=date(2026, 9, 9), source_adapters=(FixtureAdapter(),))
+        result = flow.kickoff()
+        self.assertEqual(len(result.jobs), 1)
+        self.assertEqual(result.jobs[0].source_name, "fixture_source")
+        self.assertEqual(result.verifications[0].status, "verified")
 
     def test_availability_is_explicit(self):
         self.assertIsInstance(CREWAI_AVAILABLE, bool)

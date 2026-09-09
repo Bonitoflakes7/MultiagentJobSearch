@@ -54,6 +54,7 @@ class JobSearchFlowState:
     as_of: date | None = None
     database_path: str | None = None
     run_id: str | None = None
+    source_adapters: tuple[object, ...] = ()
     result: PipelineResult | None = None
 
 
@@ -77,13 +78,15 @@ class _StagedPipeline:
     def _discover(self):
         """Collect only from the permitted saved-input adapter in this release."""
 
-        source_items = SavedInputAdapter(tuple(self._input_state["job_inputs"])).fetch()
+        source_items = list(SavedInputAdapter(tuple(self._input_state["job_inputs"])).fetch())
+        for adapter in self._input_state.get("source_adapters", ()):
+            source_items.extend(adapter.fetch())
         self._runtime["source_items"] = source_items
         self._input_state["job_inputs"] = tuple(
             replace(item.input, source_name=item.input.source_name or item.source_name)
             for item in source_items
         )
-        return source_items
+        return tuple(source_items)
 
     def _normalize(self):
         self._runtime["jobs"] = tuple(normalize_job(item) for item in self._input_state["job_inputs"])
@@ -180,7 +183,7 @@ else:
 
         def __init__(self, state: JobSearchFlowState | None = None):
             state = state or JobSearchFlowState()
-            self._prepare_runtime({"job_inputs": state.job_inputs, "profile_path": state.profile_path, "as_of": state.as_of, "database_path": state.database_path, "run_id": state.run_id})
+            self._prepare_runtime({"job_inputs": state.job_inputs, "profile_path": state.profile_path, "as_of": state.as_of, "database_path": state.database_path, "run_id": state.run_id, "source_adapters": state.source_adapters})
 
         def kickoff(self) -> PipelineResult:
             self._agent_preflight()
@@ -194,8 +197,8 @@ else:
             return self._publish()
 
 
-def build_flow(job_inputs: tuple[JobInput, ...], *, as_of: date | None = None, profile_path: str | Path = "data/candidate/profile_v1.json", database_path: str | Path | None = None, run_id: str | None = None) -> JobSearchFlow:
-    inputs = {"job_inputs": job_inputs, "profile_path": str(profile_path), "as_of": as_of, "database_path": str(database_path) if database_path else None, "run_id": run_id}
+def build_flow(job_inputs: tuple[JobInput, ...], *, as_of: date | None = None, profile_path: str | Path = "data/candidate/profile_v1.json", database_path: str | Path | None = None, run_id: str | None = None, source_adapters: tuple[object, ...] = ()) -> JobSearchFlow:
+    inputs = {"job_inputs": job_inputs, "profile_path": str(profile_path), "as_of": as_of, "database_path": str(database_path) if database_path else None, "run_id": run_id, "source_adapters": source_adapters}
     if CREWAI_AVAILABLE:
         return JobSearchFlow(input_state=inputs)
     return JobSearchFlow(state=JobSearchFlowState(**inputs))

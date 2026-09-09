@@ -4,7 +4,13 @@ import unittest
 from src.job_search_ai.domain.jobs import JobInput
 from src.job_search_ai.infrastructure.actions import ApprovalGate, create_action_request
 from src.job_search_ai.infrastructure.config import RuntimeConfig
-from src.job_search_ai.infrastructure.integrations import SavedInputAdapter, ingest_from_adapter
+from src.job_search_ai.infrastructure.integrations import (
+    CompanyCareerPageAdapter,
+    RssFeedAdapter,
+    SavedInputAdapter,
+    SourcePolicy,
+    ingest_from_adapter,
+)
 from src.job_search_ai.infrastructure.observability import TraceRecorder
 from src.job_search_ai.infrastructure.reliability import RetryPolicy, call_with_retry
 
@@ -27,6 +33,42 @@ class InfrastructureTests(unittest.TestCase):
 
         self.assertEqual(call_with_retry(flaky, RetryPolicy(max_attempts=3)), "ok")
         self.assertEqual(state["calls"], 3)
+
+    def test_live_source_policy_requires_terms_review_and_allowlist(self):
+        with self.assertRaises(PermissionError):
+            SourcePolicy(("careers.example.com",)).validate()
+        policy = SourcePolicy(("careers.example.com",), terms_reviewed=True)
+        self.assertIsNone(policy.validate())
+
+    def test_company_career_adapter_returns_attributed_untrusted_record(self):
+        policy = SourcePolicy(("careers.example.com",), terms_reviewed=True)
+
+        class FakeClient:
+            def __init__(self):
+                self.policy = policy
+
+            def read(self, url):
+                return ("<html><title>Python Intern</title><body>Python FastAPI Bangalore Posted: 2026-09-08</body></html>", "text/html")
+
+        adapter = CompanyCareerPageAdapter("https://careers.example.com/jobs/1", policy, FakeClient())
+        items = adapter.fetch()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].source_name, "company_career_page")
+        self.assertEqual(items[0].input.source_url, "https://careers.example.com/jobs/1")
+
+    def test_rss_adapter_is_bounded_and_preserves_entry_links(self):
+        policy = SourcePolicy(("feeds.example.com",), max_items=1, terms_reviewed=True)
+
+        class FakeClient:
+            def __init__(self):
+                self.policy = policy
+
+            def read(self, url):
+                return ("""<rss><channel><item><title>AI Engineer Intern</title><link>https://feeds.example.com/jobs/7</link><pubDate>2026-09-08</pubDate><description>Python FastAPI Bangalore</description></item><item><title>Second</title></item></channel></rss>""", "application/rss+xml")
+
+        items = RssFeedAdapter("https://feeds.example.com/rss", policy, FakeClient()).fetch()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].input.source_url, "https://feeds.example.com/jobs/7")
 
     def test_approval_and_idempotency_prevent_duplicate_execution(self):
         gate = ApprovalGate()
@@ -64,4 +106,3 @@ class InfrastructureTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
