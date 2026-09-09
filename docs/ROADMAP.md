@@ -14,11 +14,11 @@ Import a resume and manually supplied preferences. Extract skills, projects, exp
 
 Acceptance: every candidate claim has provenance, confidence, and a distinction between proven, inferred, desired, and unknown.
 
-## Phase 2 — job ingestion and normalization
+## Phase 2 — job ingestion and normalization (implemented)
 
 Accept saved job URLs, pasted descriptions, and permitted source data. Normalize them into a canonical job record.
 
-Acceptance: malformed, incomplete, duplicate, and stale-looking records are identified without silently disappearing.
+Acceptance: malformed, incomplete, duplicate, and stale-looking records are identified without silently disappearing. The deterministic first version is implemented in `src/job_search_ai/domain/jobs.py`; website fetching and source adapters remain future work.
 
 ## Phase 3 — verification and safety gates
 
@@ -73,4 +73,3 @@ Acceptance: failures are recoverable, side effects are authorized, secrets are p
 Build a historical benchmark and compare policy versions using ranking quality, calibration, user approval, duplicate rate, and application/interview conversion.
 
 Acceptance: improvements are supported by measured results rather than claims from the evaluator alone.
-
