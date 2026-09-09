@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date
 import os
 from pathlib import Path
@@ -16,6 +16,7 @@ from src.job_search_ai.domain.ranking import build_daily_plan, rank_jobs
 from src.job_search_ai.domain.resume import analyze_resume
 from src.job_search_ai.domain.verification import verify_job
 from src.job_search_ai.presentation.dashboard import build_dashboard
+from src.job_search_ai.infrastructure.integrations import SavedInputAdapter
 
 from .agents import AgentPlan, build_agent_plan
 from ..pipeline import PipelineResult
@@ -72,6 +73,17 @@ class _StagedPipeline:
 
         self._runtime["agent_plan"] = build_agent_plan()
         return self._runtime["agent_plan"]
+
+    def _discover(self):
+        """Collect only from the permitted saved-input adapter in this release."""
+
+        source_items = SavedInputAdapter(tuple(self._input_state["job_inputs"])).fetch()
+        self._runtime["source_items"] = source_items
+        self._input_state["job_inputs"] = tuple(
+            replace(item.input, source_name=item.input.source_name or item.source_name)
+            for item in source_items
+        )
+        return source_items
 
     def _normalize(self):
         self._runtime["jobs"] = tuple(normalize_job(item) for item in self._input_state["job_inputs"])
@@ -132,7 +144,11 @@ if CREWAI_AVAILABLE:
             return self._agent_preflight()
 
         @listen(agent_preflight)
-        def normalize_stage(self, _plan):
+        def discovery_stage(self, _plan):
+            return self._discover()
+
+        @listen(discovery_stage)
+        def normalize_stage(self, _source_items):
             return self._normalize()
 
         @listen(normalize_stage)
@@ -168,6 +184,7 @@ else:
 
         def kickoff(self) -> PipelineResult:
             self._agent_preflight()
+            self._discover()
             self._normalize()
             self._verify()
             self._match()

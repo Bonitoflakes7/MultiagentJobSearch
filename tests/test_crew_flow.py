@@ -29,7 +29,7 @@ Requirements: Python, FastAPI
 
     def test_flow_has_all_expected_stage_methods(self):
         flow = build_flow(())
-        for name in ("initialize", "agent_preflight", "normalize_stage", "verify_stage", "match_stage", "rank_stage", "resume_stage", "evaluation_stage", "publish_stage"):
+        for name in ("initialize", "agent_preflight", "discovery_stage", "normalize_stage", "verify_stage", "match_stage", "rank_stage", "resume_stage", "evaluation_stage", "publish_stage"):
             self.assertTrue(hasattr(flow, name), name)
 
     def test_flow_persists_results_when_listeners_use_worker_threads(self):

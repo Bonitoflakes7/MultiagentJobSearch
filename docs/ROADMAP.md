@@ -91,3 +91,11 @@ Use an explicit CrewAI Flow to orchestrate the validated stages from initializat
 Define specialized discovery, evidence extraction, match explanation, resume advisory, and evaluation agents behind typed output contracts. Agent delegation is disabled, listing content is explicitly untrusted, and live LLM execution is opt-in. Deterministic normalization, verification, scoring, and governance remain mandatory after agent output.
 
 Acceptance: agent definitions can be constructed without an LLM call; evidence output validates against a strict schema; the Flow records the active agent policy before processing input; and no agent can directly publish an application or override a safety gate. Live source discovery and LLM execution will be enabled incrementally after provider configuration and fixture-based tests.
+
+## Phase 16 — tool layer (implemented: guarded foundation)
+
+Expose narrow, permission-checked tools for candidate/profile reads, job persistence, duplicate detection, source validation, matching, evaluations, feedback, email drafts, and resume drafts. No tool sends email or submits an application.
+
+## Phase 17 — permitted source integrations (implemented: local sources)
+
+Route manual pasted descriptions and saved URLs through the permitted source adapter into source records, then normalization and verification. Live company-page/API/RSS adapters remain the next controlled increment and must add rate limits, timeouts, retries, attribution, duplicate handling, terms review, and failure logging.

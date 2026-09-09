@@ -21,6 +21,12 @@ Agent output is a proposal. The Flow sends it through typed parsing, determinist
 
 The current release constructs and tests the agents but does not call an LLM during normal smoke tests. This keeps development reproducible and prevents an unconfigured provider from making network calls or spending tokens.
 
+## Tool permissions
+
+Agents receive only the tools required for their role through `app/crew/tools.py`. Discovery can save job records and check duplicates; matching can read candidate evidence and calculate a score; resume and strategy agents can create drafts. Draft creation is not sending, and no agent has an application-submission tool.
+
+The Flow currently connects discovery to the local permitted-input adapter for pasted listings and saved URLs. Every resulting record still passes normalization and the Verification Agent’s deterministic seven-day freshness, source, duplicate, safety, location, and experience gates.
+
 ## Structured evidence contract
 
 `JobEvidencePacket` requires bounded fields for extracted identity, skills, responsibilities, source quotes, missing fields, safety flags, and confidence. The packet can be converted into canonical job text, after which existing normalization and verification remain authoritative. In the current roster, evidence extraction is a responsibility of the Verification Agent rather than a separate decision-making agent.
