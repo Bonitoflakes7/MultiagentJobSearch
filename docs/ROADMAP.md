@@ -85,3 +85,9 @@ Persist workflow runs, profile versions, jobs, agent results, evaluations, memor
 ## Phase 14 — CrewAI Flow orchestration (implemented)
 
 Use an explicit CrewAI Flow to orchestrate the validated stages from initialization through publication, with optional SQLite persistence and an offline fallback.
+
+## Phase 15 — specialized CrewAI agents (implemented: guarded foundation)
+
+Define specialized discovery, evidence extraction, match explanation, resume advisory, and evaluation agents behind typed output contracts. Agent delegation is disabled, listing content is explicitly untrusted, and live LLM execution is opt-in. Deterministic normalization, verification, scoring, and governance remain mandatory after agent output.
+
+Acceptance: agent definitions can be constructed without an LLM call; evidence output validates against a strict schema; the Flow records the active agent policy before processing input; and no agent can directly publish an application or override a safety gate. Live source discovery and LLM execution will be enabled incrementally after provider configuration and fixture-based tests.

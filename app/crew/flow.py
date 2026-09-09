@@ -17,6 +17,7 @@ from src.job_search_ai.domain.resume import analyze_resume
 from src.job_search_ai.domain.verification import verify_job
 from src.job_search_ai.presentation.dashboard import build_dashboard
 
+from .agents import AgentPlan, build_agent_plan
 from ..pipeline import PipelineResult
 from ..storage import SQLiteStore, persist_pipeline_result
 
@@ -60,11 +61,17 @@ class _StagedPipeline:
 
     def _prepare_runtime(self, inputs: dict) -> None:
         self._input_state = inputs
-        self._runtime = {"profile": load_candidate_profile(inputs["profile_path"])}
+        self._runtime = {"profile": load_candidate_profile(inputs["profile_path"]), "agent_plan": None}
         self._store = SQLiteStore(inputs["database_path"]) if inputs.get("database_path") else None
         self._run_id = inputs.get("run_id") or f"run_{uuid4().hex}"
         if self._store:
             self._run_id = self._store.start_run({"orchestrator": "crewai_flow"}, run_id=self._run_id)
+
+    def _agent_preflight(self) -> AgentPlan:
+        """Record the agent policy before untrusted job data enters the Flow."""
+
+        self._runtime["agent_plan"] = build_agent_plan()
+        return self._runtime["agent_plan"]
 
     def _normalize(self):
         self._runtime["jobs"] = tuple(normalize_job(item) for item in self._input_state["job_inputs"])
@@ -121,7 +128,11 @@ if CREWAI_AVAILABLE:
             return "initialized"
 
         @listen(initialize)
-        def normalize_stage(self, _signal):
+        def agent_preflight(self, _signal):
+            return self._agent_preflight()
+
+        @listen(agent_preflight)
+        def normalize_stage(self, _plan):
             return self._normalize()
 
         @listen(normalize_stage)
@@ -156,6 +167,7 @@ else:
             self._prepare_runtime({"job_inputs": state.job_inputs, "profile_path": state.profile_path, "as_of": state.as_of, "database_path": state.database_path, "run_id": state.run_id})
 
         def kickoff(self) -> PipelineResult:
+            self._agent_preflight()
             self._normalize()
             self._verify()
             self._match()
@@ -170,4 +182,3 @@ def build_flow(job_inputs: tuple[JobInput, ...], *, as_of: date | None = None, p
     if CREWAI_AVAILABLE:
         return JobSearchFlow(input_state=inputs)
     return JobSearchFlow(state=JobSearchFlowState(**inputs))
-
