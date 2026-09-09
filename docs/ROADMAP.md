@@ -32,11 +32,11 @@ Compare each verified job with the candidate profile. Produce weighted dimension
 
 Acceptance: scores are reproducible from a stored input snapshot and never depend on hidden conversational history. The baseline matcher is implemented in `src/job_search_ai/domain/matching.py` with weighted dimensions, evidence, gaps, confidence, and recommendation bands.
 
-## Phase 5 — ranking and daily action plan
+## Phase 5 — ranking and daily action plan (implemented)
 
 Rank jobs using fit, personal preference, career value, freshness, effort, and application probability. Produce tiers and recommended next actions.
 
-Acceptance: ranking explanations identify the factors that changed an item's position and handle ties or conflicts explicitly.
+Acceptance: ranking explanations identify the factors that changed an item's position and handle ties or conflicts explicitly. The baseline ranker and bounded action-plan builder are implemented in `src/job_search_ai/domain/ranking.py`.
 
 ## Phase 6 — resume analysis and controlled tailoring
 
